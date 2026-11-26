@@ -1,0 +1,7 @@
+# Local testing only. Copy to .dev.vars (git-ignored). Real values go in with: npx wrangler secret put NAME
+DRY_RUN=true
+ADMIN_PASSWORD=pick-something-long
+VERIFY_TOKEN=pick-any-random-string
+IG_APP_SECRET=the-INSTAGRAM-app-secret-not-the-Meta-one
+# IG_ACCESS_TOKEN=paste after Meta step 3
+# NTFY_TOPIC=optional, phone alert when someone answers

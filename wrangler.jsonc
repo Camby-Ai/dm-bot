@@ -1,0 +1,25 @@
+{
+  "name": "dm-bot",
+  "main": "src/index.js",
+  "compatibility_date": "2025-09-01",
+  "durable_objects": {
+    "bindings": [{ "name": "BOT", "class_name": "BotDO" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["BotDO"] }],
+  "triggers": { "crons": ["* * * * *"] },
+  "vars": {
+    // Dry run logs what it would send and sends nothing. Set to "false" only after a second account has tested the flow.
+    "DRY_RUN": "true",
+    // Your Instagram handle, without the @.
+    "IG_USERNAME": "your_handle",
+    // Your Instagram account ID, shown on Meta's API setup page next to your account.
+    "IG_USER_ID": "",
+    "GRAPH_VERSION": "v23.0",
+    // graph.instagram.com for a token made with Instagram login.
+    // graph.facebook.com for a system-user token made in Meta Business settings (starts with EAA).
+    "GRAPH_HOST": "graph.instagram.com",
+    // Shown on the privacy and data deletion pages Meta asks for.
+    "BRAND_NAME": "Your business",
+    "CONTACT_EMAIL": "you@example.com"
+  }
+}

@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Own Comment to DM Bot &middot; CAMBY Ai</title>
+<meta name="description" content="Someone comments or DMs a word and your link lands in their DMs. The code, the six Meta steps, how to test it safely, and the rules Instagram enforces. It runs in your own accounts with no per person bill.">
+<meta name="theme-color" content="#0B0D12">
+<link rel="icon" href="camby-ai-logo-web.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CAMBY Ai">
+<meta property="og:title" content="Your Own Comment to DM Bot">
+<meta property="og:description" content="Someone comments or DMs a word and your link lands in their DMs. The code, the six Meta steps, how to test it safely, and the rules Instagram enforces. It runs in your own accounts with no per person bill.">
+<meta property="og:url" content="https://chat.mikecamby.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Your Own Comment to DM Bot">
+<meta name="twitter:description" content="Someone comments or DMs a word and your link lands in their DMs. The code, the six Meta steps, how to test it safely, and the rules Instagram enforces. It runs in your own accounts with no per person bill.">
+<style>
+  /* Layout: single column, left-aligned. Gold hairline rules separate numbered
+     sections, mirroring the CAMBY Ai site's "01 / SECTION" structure. */
+  :root {
+    --bg:        #0B0D12;
+    --panel:     #12161E;
+    --panel-2:   #171C26;
+    --line:      #2A2E3A;
+    --line-gold: #4A3B1E;
+    --gold:      #D8AA57;
+    --gold-dim:  #8A6E38;
+    --text:      #F7F3EB;
+    --muted:     #A49B89;
+    --ink:       #17191D;
+    --font-head: Georgia, "Times New Roman", serif;
+    --font-body: Arial, Helvetica, sans-serif;
+    --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  h1, h2, h3, h4 { font-family: var(--font-head); font-weight: normal; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(38px, 7vw, 68px); line-height: 1.05; letter-spacing: -0.015em; }
+  h2 { font-size: clamp(27px, 4.4vw, 40px); line-height: 1.15; letter-spacing: -0.01em; }
+  h3 { font-size: clamp(19px, 2.4vw, 23px); line-height: 1.3; }
+  h1 em, h2 em { color: var(--gold); font-style: italic; }
+  p { margin: 0; }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0;
+  }
+  .eyebrow .sep { color: var(--gold-dim); }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .masthead .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; padding-block: 18px;
+  }
+  .masthead img { width: 168px; height: auto; display: block; }
+  .masthead .tag {
+    font-size: 11px; letter-spacing: 0.19em; text-transform: uppercase;
+    color: var(--muted); border-left: 1px solid var(--line-gold); padding-left: 14px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero .wrap { padding-block: clamp(40px, 7vw, 76px); }
+  .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(28px, 5vw, 56px); align-items: center; }
+  .hero-copy { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+  .lede { font-size: clamp(16px, 1.9vw, 18.5px); color: var(--muted); max-width: 54ch; }
+  .lede strong { color: var(--text); font-weight: normal; }
+
+  .portrait { position: relative; min-width: 0; }
+  .portrait img { width: 100%; max-width: 100%; height: auto; display: block; border: 1px solid var(--line-gold); }
+  .portrait figcaption {
+    margin-top: 12px; font-size: 11px; letter-spacing: 0.17em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .portrait figcaption b { color: var(--gold); font-weight: normal; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .fact { flex: 1 1 150px; min-width: 0; padding: 16px 18px 16px 0; }
+  .fact + .fact { border-left: 1px solid var(--line); padding-left: 18px; }
+  .fact dt { font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--muted); }
+  .fact dd { margin: 5px 0 0; font-family: var(--font-head); font-size: 21px; color: var(--gold); }
+
+  /* ---------- sections ---------- */
+  section { border-top: 1px solid var(--line); }
+  section .wrap { padding-block: clamp(36px, 5.5vw, 62px); }
+  .sec-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+  .sec-body { display: flex; flex-direction: column; gap: 20px; max-width: 68ch; }
+  .sec-body p { color: var(--muted); }
+  .sec-body p strong { color: var(--text); font-weight: bold; }
+
+  /* ---------- timeline table ---------- */
+  .scroll-x { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 440px; font-size: 15px; }
+  caption {
+    text-align: left; font-size: 11px; letter-spacing: 0.17em; text-transform: uppercase;
+    color: var(--muted); padding-bottom: 12px;
+  }
+  th, td { text-align: left; padding: 13px 16px 13px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--font-body); font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--gold); font-weight: normal; }
+  td.when { color: var(--gold); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.what { color: var(--text); }
+  td.note { color: var(--muted); font-size: 14px; }
+  tr.heavy td.when { color: var(--text); background: var(--panel-2); padding-left: 12px; }
+
+  /* ---------- steps ---------- */
+  .step { display: grid; grid-template-columns: 62px 1fr; gap: 0 22px; padding-block: 30px; border-top: 1px solid var(--line); }
+  .step:first-of-type { border-top: 0; }
+  .step-num { font-family: var(--font-head); font-size: 34px; color: var(--gold-dim); line-height: 1; padding-top: 4px; font-variant-numeric: tabular-nums; }
+  .step-body { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+  .step-body > p { color: var(--muted); max-width: 62ch; }
+  .step-body h3 em { color: var(--gold); font-style: italic; }
+
+  ul.ticks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  ul.ticks li { position: relative; padding-left: 20px; color: var(--muted); max-width: 62ch; }
+  ul.ticks li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 1px; background: var(--gold); }
+  ul.ticks li b { color: var(--text); font-weight: bold; }
+
+  /* ---------- code ---------- */
+  .code { border: 1px solid var(--line); background: var(--panel); }
+  .code-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 9px 12px; border-bottom: 1px solid var(--line); background: var(--panel-2);
+  }
+  .code-top span { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .copy {
+    font-family: var(--font-body); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: transparent; color: var(--gold); border: 1px solid var(--line-gold);
+    padding: 5px 11px; cursor: pointer;
+  }
+  .copy:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+  .copy:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  pre { margin: 0; padding: 14px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.75; color: var(--text); }
+  pre .c { color: var(--gold-dim); }
+  code { font-family: var(--font-mono); font-size: 0.92em; color: var(--gold); }
+
+  /* ---------- callout ---------- */
+  .callout { border-left: 2px solid var(--gold); background: var(--panel); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+  .callout .k { font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--gold); }
+  .callout p { color: var(--muted); max-width: 62ch; }
+
+  /* ---------- guardrails ---------- */
+  .rails { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .rail { background: var(--bg); padding: 20px; display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .rail dt { font-family: var(--font-head); font-size: 18px; color: var(--text); }
+  .rail dd { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .rail .val { color: var(--gold); font-family: var(--font-mono); font-size: 13px; }
+
+  /* ---------- cta ---------- */
+  .cta { background: var(--panel); border-top: 1px solid var(--line-gold); }
+  .cta .wrap { padding-block: clamp(40px, 6vw, 68px); display: flex; flex-direction: column; gap: 24px; }
+  .cta-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: start; }
+  .contact { border: 1px solid var(--line-gold); padding: 22px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .contact .row { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .contact .row dt { font-size: 10.5px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--muted); }
+  .contact .row dd { margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+  .contact .v { font-family: var(--font-mono); font-size: 14.5px; color: var(--gold); word-break: break-all; }
+  a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--line-gold); }
+  a:hover { border-bottom-color: var(--gold); }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); }
+  footer .wrap { padding-block: 34px; display: flex; flex-direction: column; gap: 18px; }
+  footer img.sig { width: 150px; height: auto; opacity: 0.85; }
+  footer p { font-size: 13.5px; color: var(--muted); max-width: 70ch; }
+  .fine { font-size: 12px; color: var(--gold-dim); }
+
+  @media (max-width: 760px) {
+    .hero-grid, .cta-grid { grid-template-columns: 1fr; }
+    .portrait { max-width: 340px; }
+    .step { grid-template-columns: 1fr; gap: 12px; }
+    .step-num { font-size: 26px; padding-top: 0; }
+    .fact + .fact { border-left: 0; padding-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <img src="camby-ai-logo-web.png" alt="CAMBY Ai">
+    <div class="tag">DM Bot &middot; Setup Guide</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">00 <span class="sep">/</span> Comment a word, get the link</p>
+      <h1>Your own DM bot.<br><em>No per person bill.</em></h1>
+      <p class="lede">Someone comments a word on your reel, or DMs it to you, and your link lands in their DMs.
+        Most people rent that feature and pay for every person it talks to.
+        <strong>This is the one we built for ourselves,</strong> and you can download it.</p>
+      <p class="lede">It runs in your own Cloudflare and Meta accounts. The code is free under the MIT license.
+        What follows is what it does, what you need, the six Meta steps, how to test it without messaging anyone
+        by mistake, and the rules Instagram enforces.</p>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">01 <span class="sep">/</span> What it does</p>
+      <h2>One word in.<br><em>One link out.</em></h2>
+    </div>
+    <ul class="ticks">
+      <li><b>They ask.</b> Someone comments your keyword on a reel, or DMs it to your account.</li>
+      <li><b>It asks one question.</b> A reply goes under the comment and one question goes to their DMs, with tap answers if you want them.</li>
+      <li><b>They answer.</b> Typed or tapped. The answer is saved next to their name.</li>
+      <li><b>It sends the link.</b> As a button, and clicks are counted.</li>
+      <li><b>Nobody is held hostage.</b> If they never answer, the link goes out anyway after 60 minutes. You can change the wait.</li>
+      <li><b>Then it stops.</b> One run per person per keyword. After the link, the conversation is yours to have by hand.</li>
+    </ul>
+    <div class="sec-body" style="margin-top:22px">
+      <p>It has a small admin page behind a password: your keywords, the messages, a log of everything sent, the people who asked and what they answered.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">02 <span class="sep">/</span> Before you start</p>
+      <h2>What you need.<br><em>All of it is free to open.</em></h2>
+    </div>
+    <div class="scroll-x">
+      <table>
+        <caption>What to have ready</caption>
+        <thead>
+          <tr><th scope="col">Item</th><th scope="col">What</th><th scope="col">Note</th></tr>
+        </thead>
+        <tbody>
+          <tr class="heavy">
+            <td class="when">Instagram</td>
+            <td class="what">A professional account, creator or business</td>
+            <td class="note">Instagram only lets professional accounts use its messaging API</td>
+          </tr>
+          <tr>
+            <td class="when">Meta</td>
+            <td class="what">A Meta developer account</td>
+            <td class="note">Free. This is where the app that connects to Instagram lives</td>
+          </tr>
+          <tr>
+            <td class="when">Cloudflare</td>
+            <td class="what">A Cloudflare account</td>
+            <td class="note">The bot runs on Workers. The free plan has daily limits, so check them against your volume</td>
+          </tr>
+          <tr>
+            <td class="when">A computer</td>
+            <td class="what">Node.js and a terminal</td>
+            <td class="note">Or an AI that can run commands for you. See the end of section 03</td>
+          </tr>
+          <tr>
+            <td class="when">A second account</td>
+            <td class="what">Another Instagram account you control</td>
+            <td class="note">For testing. The bot ignores your own comments, so you cannot test it from the main account</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">03 <span class="sep">/</span> Get it running</p>
+      <h2>Four steps.<br><em>Nothing is sent yet.</em></h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3>Download the code</h3>
+        <p><a href="https://github.com/Camby-Ai/dm-bot/archive/refs/heads/main.zip">Download the ZIP</a> and unzip it, or clone <a href="https://github.com/Camby-Ai/dm-bot">the repository</a>. Open a terminal in that folder.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3>Set your details</h3>
+        <p>Open <strong>wrangler.jsonc</strong> and set your Instagram handle, your business name and a contact email. The last two appear on the privacy page Meta asks for.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3>Deploy it in dry run</h3>
+        <p>Dry run is on by default. It logs what it would send and sends nothing.</p>
+        <div class="code">
+          <div class="code-top"><span>Run in the folder</span><button class="copy" type="button">Copy</button></div>
+<pre>npm install
+npx wrangler login
+npx wrangler secret put ADMIN_PASSWORD
+npx wrangler secret put VERIFY_TOKEN
+npx wrangler deploy</pre>
+        </div>
+        <p>The admin password is yours to pick. The verify token is any random string. You will paste it into Meta in step 4 of the next section. The last command prints your bot&rsquo;s address.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h3>Open the admin page</h3>
+        <p>Go to your bot&rsquo;s address followed by <strong>/admin</strong> and sign in. The Setup tab lists the three addresses Meta needs: the webhook, the privacy page and the data deletion page.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:26px">
+      <span class="k">Or have your AI do it</span>
+      <p>Paste this into an AI that can run commands on your computer, such as Claude Code. It can do the Cloudflare half. The Meta half needs you, because it is your Instagram account.</p>
+    </div>
+    <div style="margin-top:14px">
+        <div class="code">
+          <div class="code-top"><span>Paste into your AI</span><button class="copy" type="button">Copy</button></div>
+<pre style="white-space:pre-wrap">https://github.com/Camby-Ai/dm-bot
+
+Set this up on my Cloudflare account. Read the README first.
+Keep DRY_RUN on. Ask me before you create an account, accept any terms or store a secret.
+Stop when it is deployed and tell me the three addresses Meta needs.</pre>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">04 <span class="sep">/</span> The Meta side</p>
+      <h2>Six steps.<br><em>Most of the hour is here.</em></h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3>Make a free Meta app</h3>
+        <p>At developers.facebook.com, create an app and pick the use case <strong>Manage messaging &amp; content on Instagram</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3>Add your Instagram as a tester</h3>
+        <p>In the app: App roles, Add people, Instagram Tester, and type your handle. Then on instagram.com: Settings, Apps and websites, Tester invites, Accept.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3>Connect your account and generate a token</h3>
+        <p>Under API setup with Instagram login, add your account and generate a token. Copy the account ID shown beside it into <strong>IG_USER_ID</strong> in wrangler.jsonc, then store the token and the app secret.</p>
+        <div class="code">
+          <div class="code-top"><span>Run in the folder</span><button class="copy" type="button">Copy</button></div>
+<pre>npx wrangler secret put IG_ACCESS_TOKEN
+npx wrangler secret put IG_APP_SECRET
+npx wrangler deploy</pre>
+        </div>
+        <p>The app secret is the <strong>Instagram</strong> app secret on the Instagram login page, not the Meta app secret. The bot uses it to check that each message really came from Meta.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h3>Point a webhook at your bot</h3>
+        <p>Callback URL: your bot&rsquo;s address followed by /webhook. Verify token: the string you stored earlier. Then turn on <strong>comments</strong>, <strong>messages</strong> and <strong>messaging_postbacks</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <h3>Publish the app</h3>
+        <p>Paste in the privacy and data deletion addresses from the Setup tab. Instagram sends nothing to an unpublished app.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-body">
+        <h3>On your phone, allow access to messages</h3>
+        <p>Instagram, Settings, Messages and story replies, Message controls, Connected tools, <strong>Allow access to messages</strong>.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:26px">
+      <span class="k">Meta moves its menus</span>
+      <p>These are the names we clicked in November 2026. If a screen looks different, paste what you see into your AI with the step you are on and let it find the new name.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">05 <span class="sep">/</span> Go live safely</p>
+      <h2>Test it <em>before a stranger does</em></h2>
+    </div>
+    <ul class="ticks">
+      <li><b>Make one automation.</b> A keyword, the question, the link. Press Go live. In dry run that still sends nothing.</li>
+      <li><b>Simulate it.</b> The Setup tab has a Simulate button. Read the Log tab and check every message it would have sent.</li>
+      <li><b>Turn dry run off.</b> Set DRY_RUN to "false" in wrangler.jsonc and deploy again.</li>
+      <li><b>Test from the second account.</b> One comment and one DM. Your own account&rsquo;s comments are ignored on purpose.</li>
+      <li><b>Then post the reel.</b> Not before. A broken keyword on a live reel is a promise you are not keeping.</li>
+    </ul>
+    <div class="callout" style="margin-top:26px">
+      <span class="k">Pick the keyword with care</span>
+      <p>A keyword that is a common word will fire on ordinary messages. Match it only when the whole message is that word, or choose a word people do not use by accident.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">06 <span class="sep">/</span> Be honest about it</p>
+      <h2>What Instagram <em>will not let it do</em></h2>
+    </div>
+    <div class="scroll-x">
+      <table>
+        <caption>The rules and the limits</caption>
+        <thead>
+          <tr><th scope="col">Rule</th><th scope="col">What it means</th><th scope="col">What the bot does</th></tr>
+        </thead>
+        <tbody>
+          <tr class="heavy">
+            <td class="when">One reply per comment</td>
+            <td class="what">You get one private reply to a comment, within 7 days of it</td>
+            <td class="note">It uses that reply for the question</td>
+          </tr>
+          <tr>
+            <td class="when">The 24 hour window</td>
+            <td class="what">After that you can only message someone within 24 hours of their last message or tap</td>
+            <td class="note">It stops and leaves the rest to you</td>
+          </tr>
+          <tr>
+            <td class="when">The 60 minute follow-up</td>
+            <td class="what">Someone who commented and never answered may be outside what Instagram allows</td>
+            <td class="note">It tries, logs the error and marks them expired. We have not tested this path on comments</td>
+          </tr>
+          <tr>
+            <td class="when">Tap answers</td>
+            <td class="what">Instagram may refuse buttons on the first reply to a comment</td>
+            <td class="note">It sends the question again as plain text. Untested</td>
+          </tr>
+          <tr>
+            <td class="when">Two kinds of token</td>
+            <td class="what">An Instagram login token, or a system-user token from Meta Business settings</td>
+            <td class="note">It handles both. Ours runs on the second. We have not run the first one live</td>
+          </tr>
+          <tr>
+            <td class="when">Your own comments</td>
+            <td class="what">The bot never reacts to your own account</td>
+            <td class="note">So test from a second account</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sec-body" style="margin-top:22px">
+      <p>Check these against Meta&rsquo;s documentation before you rely on them. Meta changes its rules, and a bot that breaks them can lose its access.</p>
+      <p>This is a tool for sending people something they asked for. It is not a way to message people who did not ask.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">07 <span class="sep">/</span> If you get stuck</p>
+      <h2>Or we <em>set it up for you</em></h2>
+    </div>
+    <div class="cta-grid">
+      <div class="sec-body">
+        <p>The code is the short part. The hour goes to Meta: the app, the tester invite, the token, the webhook and
+          the phone setting, in that order.</p>
+        <p>If a step fails, paste the exact error into your AI and let it patch the step. If you would rather
+          have it set up with you, that is a conversation I am happy to have.</p>
+        <p><strong>Tell me what you want your first keyword to send.</strong> I will tell you if this fits.</p>
+      </div>
+      <dl class="contact">
+        <div class="row">
+          <dt>Email</dt>
+          <dd><span class="v" id="v-email">mike@mikecamby.com</span>
+            <button class="copy" type="button" data-copy="mike@mikecamby.com">Copy</button></dd>
+        </div>
+        <div class="row">
+          <dt>Text</dt>
+          <dd><span class="v" id="v-phone">747.441.6578</span>
+            <button class="copy" type="button" data-copy="747.441.6578">Copy</button></dd>
+        </div>
+        <div class="row">
+          <dt>Book a time</dt>
+          <dd><a href="https://cal.com/mikecamby">cal.com/mikecamby</a></dd>
+        </div>
+        <div class="row">
+          <dt>The code</dt>
+          <dd><a href="https://github.com/Camby-Ai/dm-bot">github.com/Camby-Ai/dm-bot</a></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <img class="sig" src="camby-signature-web.png" alt="Camby">
+    <p>The idea and the six Meta steps come from the Soulepreneur post
+      <a href="https://soulepreneur.com/posts/build-your-own-manychat">Build your own ManyChat</a>. The code is CAMBY Ai's, under the MIT license,
+      and it follows our own flow: one question first, then the link.</p>
+    <p class="fine">CAMBY Ai &middot; AI solutions for local businesses &middot; Las Vegas, Nevada &middot; More revenue. Less costs.</p>
+    <p class="fine">Not affiliated with or endorsed by Meta, Instagram, Cloudflare or ManyChat. Names belong to their owners.
+      The software comes with no warranty. You are responsible for following Instagram's rules and for the messages your account sends. Written in November 2026.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.dataset.copy;
+      if (!text) {
+        var block = btn.closest(".code");
+        var pre = block && block.querySelector("pre");
+        if (!pre) return;
+        text = pre.innerText.replace(/[ \t]*#.*$/gm, "").trim();
+      }
+      var done = function () {
+        var prev = btn.textContent;
+        btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = prev; }, 1400);
+      };
+      try {
+        navigator.clipboard.writeText(text).then(done, function () { select(btn, text); });
+      } catch (e) {
+        select(btn, text);
+      }
+    });
+  });
+
+  function select(btn, text) {
+    var holder = btn.closest(".code") || btn.parentElement;
+    var target = holder && (holder.querySelector("pre") || holder.querySelector(".v"));
+    if (!target) return;
+    var range = document.createRange();
+    range.selectNodeContents(target);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    btn.textContent = "Select and copy";
+    setTimeout(function () { btn.textContent = "Copy"; }, 2200);
+  }
+</script>
+
+</body>
+</html>
